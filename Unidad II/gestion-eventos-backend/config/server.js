@@ -7,6 +7,9 @@ const app = express();
 app.use(express.json());
 app.use(ServerLog)
 
+// Rutas
+app.use(apiRouter)
+
 // Manejo de rutas no definidas (404)
 app.use((req, res) => {
 
@@ -22,8 +25,5 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Error interno del servidor' });
 
 });
-
-// Rutas
-app.use(apiRouter)
 
 export default app;
