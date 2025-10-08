@@ -3,7 +3,7 @@ import { Event } from "../models/eventModel.js";
 // Obtener todos los eventos
 export const getEvents = async (req, res, next) => {
   try {
-    const events = Event.find();
+    const events = await Event.find();
     res.status(200).json(events);
   } catch (error) {
     next(error)
