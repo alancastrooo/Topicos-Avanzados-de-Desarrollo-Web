@@ -1,6 +1,7 @@
 import express from "express"
 import ServerLog from "../middlewares/log.js";
 import apiRouter from "../routers/api.js";
+import { errorHandler, notFoundRoute } from "../middlewares/error.js";
 
 const app = express();
 
@@ -11,19 +12,10 @@ app.use(ServerLog)
 app.use(apiRouter)
 
 // Manejo de rutas no definidas (404)
-app.use((req, res) => {
-
-  res.status(404).json({ error: 'Ruta no encontrada' });
-
-});
+app.use(notFoundRoute);
 
 // Manejo de errores generales
-app.use((err, req, res, next) => {
+app.use(errorHandler);
 
-  console.error(err.stack);
-
-  res.status(500).json({ error: 'Error interno del servidor' });
-
-});
 
 export default app;

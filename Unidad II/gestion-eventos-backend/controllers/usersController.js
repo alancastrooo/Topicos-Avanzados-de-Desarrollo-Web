@@ -1,6 +1,6 @@
 import { User } from "../models/userModel.js";
 
-export const createUser = async (req, res) => {
+export const createUser = async (req, res, next) => {
   try {
     const { name, email, age } = req.body;
     if (!name || !email || !age) {
@@ -13,8 +13,7 @@ export const createUser = async (req, res) => {
 
     res.status(201).json(savedUser);
   } catch (error) {
-    res.status(500).json({ error: "Error del servidor interno" });
-    console.error(error);
+    next(error)
   }
 };
 
@@ -23,7 +22,6 @@ export const getUsers = async (req, res) => {
     const users = await User.find();
     res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ error: "Error del servidor interno" });
-    console.error(error);
+    next(error)
   }
 };

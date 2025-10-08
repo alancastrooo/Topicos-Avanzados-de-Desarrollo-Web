@@ -1,19 +1,18 @@
 import { Event } from "../models/eventModel.js";
 
 // Obtener todos los eventos
-export const getEvents = async (req, res) => {
+export const getEvents = async (req, res, next) => {
   try {
     const events = Event.find();
     res.status(200).json(events);
   } catch (error) {
-    res.status(500).json({ error: "Error del servidor interno" });
-    console.error(error);
+    next(error)
   }
 };
 
 // Obtener un evento por id
 
-export const getEventId = async (req, res) => {
+export const getEventId = async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);
 
@@ -26,13 +25,12 @@ export const getEventId = async (req, res) => {
     if (!evento) return res.status(404).json({ error: "Evento no encontrado" });
     res.status(200).json(evento);
   } catch (error) {
-    res.status(500).json({ error: "Error del servidor interno" });
-    console.error(error);
+    next(error)
   }
 };
 
 // Crear un nuevo evento
-export const createEvent = async (req, res) => {
+export const createEvent = async (req, res, next) => {
   try {
     const { name, date } = req.body;
     if (!name || !date) {
@@ -44,13 +42,12 @@ export const createEvent = async (req, res) => {
 
     res.status(201).json(nuevoEvento);
   } catch (error) {
-    res.status(500).json({ error: "Error del servidor interno" });
-    console.error(error);
+    next(error)
   }
 };
 
 // Actualizar un evento existente
-export const updateEvent = async (req, res) => {
+export const updateEvent = async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);
     if (isNaN(id) || !id) {
@@ -74,13 +71,12 @@ export const updateEvent = async (req, res) => {
 
     res.json(eventoActualizado);
   } catch (error) {
-    res.status(500).json({ error: "Error del servidor interno" });
-    console.error(error);
+    next(error)
   }
 };
 
 // Eliminar un evento
-export const deleteEvent = async (req, res) => {
+export const deleteEvent = async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);
     if (isNaN(id) || !id) {
@@ -95,7 +91,6 @@ export const deleteEvent = async (req, res) => {
 
     res.json({ mensaje: "Evento eliminado" });
   } catch (error) {
-    res.status(500).json({ error: "Error del servidor interno" });
-    console.error(error);
+    next(error)
   }
 };
