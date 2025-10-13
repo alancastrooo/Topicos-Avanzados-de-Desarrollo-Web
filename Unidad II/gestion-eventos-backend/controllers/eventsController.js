@@ -11,7 +11,6 @@ export const getEvents = async (req, res, next) => {
 };
 
 // Obtener un evento por id
-
 export const getEventId = async (req, res, next) => {
   try {
     const id = parseInt(req.params.id);
