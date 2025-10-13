@@ -1,9 +1,10 @@
-import mongoose from "mongoose";
 import dotenv from "dotenv";
+import mongoose from "mongoose";
 
 dotenv.config();
 
 const mongoUri = process.env.MONGO_URI;
+
 
 export const connectMongo = async () => {
 
@@ -17,6 +18,5 @@ export const connectMongo = async () => {
     console.error(`Error de conexión ❌\n${error}`)
     process.exit(1)
   }
-
 
 }
