@@ -2,10 +2,10 @@
   "name": "gestion-eventos-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server.js",
+    "test": "jest --runInBand --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,11 @@
     "mongoose-sequence": "^6.0.1"
   },
   "devDependencies": {
-    "dotenv": "^17.2.2"
+    "@babel/preset-env": "^7.28.5",
+    "dotenv": "^17.2.2",
+    "jest": "^30.2.0",
+    "mongodb-memory-server": "^10.2.3",
+    "supertest": "^7.1.4",
+    "tslib": "^2.8.1"
   }
 }

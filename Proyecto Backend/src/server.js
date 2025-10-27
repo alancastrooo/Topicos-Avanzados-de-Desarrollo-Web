@@ -1,5 +1,5 @@
 import { connectMongo } from "./config/mongoDB.js";
-import app from "./config/server.js"
+import app from "./config/app.js"
 import dotenv from 'dotenv';
 
 dotenv.config();
