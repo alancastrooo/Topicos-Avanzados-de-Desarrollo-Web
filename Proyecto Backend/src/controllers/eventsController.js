@@ -3,7 +3,7 @@ import { Event } from "../models/eventModel.js";
 // Obtener todos los eventos
 export const getEvents = async (req, res, next) => {
   try {
-    const events = await Event.find();
+    const events = await Event.find().sort({ createdAt: 1 });
     res.status(200).json(events);
   } catch (error) {
     next(error)
@@ -13,10 +13,12 @@ export const getEvents = async (req, res, next) => {
 // Obtener un evento por id
 export const getEventId = async (req, res, next) => {
   try {
-    const id = parseInt(req.params.id);
+    const id = Number.parseInt(req.params.id);
 
-    if (isNaN(id) || !id) {
-      return res.status(400).json({ error: "El id debe ser un número válido" });
+    if (Number.isNaN(id) || !id || id <= 0) {
+      const error = new Error("ID inválido o no proporcionado.");
+      error.statusCode = 400
+      throw error;
     }
 
     const evento = await Event.findOne({ id });
@@ -48,9 +50,12 @@ export const createEvent = async (req, res, next) => {
 // Actualizar un evento existente
 export const updateEvent = async (req, res, next) => {
   try {
-    const id = parseInt(req.params.id);
-    if (isNaN(id) || !id) {
-      return res.status(400).json({ error: "El id debe ser un número válido" });
+    const id = Number.parseInt(req.params.id);
+    
+    if (Number.isNaN(id) || !id || id <= 0) {
+      const error = new Error("ID inválido o no proporcionado.");
+      error.statusCode = 400
+      throw error;
     }
 
     const { name, date } = req.body;
@@ -77,9 +82,12 @@ export const updateEvent = async (req, res, next) => {
 // Eliminar un evento
 export const deleteEvent = async (req, res, next) => {
   try {
-    const id = parseInt(req.params.id);
-    if (isNaN(id) || !id) {
-      return res.status(400).json({ error: "El id debe ser un número válido" });
+    const id = Number.parseInt(req.params.id);
+    
+    if (Number.isNaN(id) || !id || id <= 0) {
+      const error = new Error("ID inválido o no proporcionado.");
+      error.statusCode = 400
+      throw error;
     }
 
     const eventoEliminado = await Event.findOneAndDelete({ id });
@@ -88,7 +96,7 @@ export const deleteEvent = async (req, res, next) => {
       return res.status(404).json({ error: "Evento no encontrado" });
     }
 
-    res.json({ mensaje: "Evento eliminado" });
+    res.status(200).json({ message: "Evento eliminado" });
   } catch (error) {
     next(error)
   }

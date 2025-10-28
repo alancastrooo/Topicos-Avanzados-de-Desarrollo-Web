@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { createProduct, deleteProduct, getProductBy, getProducts, updateProduct } from "../controllers/productsController.js";
+import { createProduct, deleteProduct, findProduct, getProducts, updateProduct } from "../controllers/productsController.js";
 
 const productsRouter = Router()
 
 // api_url/products
 productsRouter.post('', createProduct)
 productsRouter.get('', getProducts)
-productsRouter.get('/find', getProductBy)
+productsRouter.get('/find', findProduct)
 productsRouter.put('/:id', updateProduct) 
 productsRouter.delete('/:id', deleteProduct)
 

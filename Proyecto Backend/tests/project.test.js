@@ -1,27 +1,40 @@
+// project.test.js
 import request from "supertest";
 import mongoose from "mongoose";
+import { MongoMemoryServer } from "mongodb-memory-server";
 
 import app from "../src/config/app.js";
 import { Project } from "../src/models/projectModel.js";
 
-import { MongoMemoryServer } from "mongodb-memory-server";
-
 let mongoServer;
 
 beforeAll(async () => {
+  // Desconecta cualquier conexión existente
+  if (mongoose.connection.readyState !== 0) {
+    await mongoose.disconnect();
+  }
+  
   mongoServer = await MongoMemoryServer.create();
   const uri = mongoServer.getUri();
+  
   await mongoose.connect(uri);
 });
 
 afterAll(async () => {
-  await mongoose.disconnect();
-  await mongoServer.stop();
+  if (mongoose.connection.readyState !== 0) {
+    await mongoose.disconnect();
+  }
+  if (mongoServer) {
+    await mongoServer.stop();
+  }
 });
 
-// Limpia la colección entre pruebas
 afterEach(async () => {
-  await Project.deleteMany({});
+  // Limpia TODAS las colecciones, incluyendo las de counters de mongoose-sequence
+  const collections = mongoose.connection.collections;
+  for (const key in collections) {
+    await collections[key].deleteMany({});
+  }
 });
 
 describe("Project API", () => {
@@ -32,7 +45,7 @@ describe("Project API", () => {
         title: "Proyecto Jest",
         description: "Proyecto de prueba con Jest",
       });
-
+    
     expect(res.statusCode).toBe(201);
     expect(res.body).toHaveProperty("_id");
     expect(res.body.title).toBe("Proyecto Jest");
@@ -45,9 +58,10 @@ describe("Project API", () => {
 
   it("Debe listar proyectos (GET /projects)", async () => {
     await Project.create({ title: "Test 1", description: "desc" });
-
     const res = await request(app).get("/projects");
+    
     expect(res.statusCode).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
     expect(res.body.length).toBeGreaterThan(0);
   });
 
@@ -56,8 +70,9 @@ describe("Project API", () => {
       title: "Test ID",
       description: "desc",
     });
-
+    
     const res = await request(app).get(`/projects/${project._id}`);
+    
     expect(res.statusCode).toBe(200);
     expect(res.body.title).toBe("Test ID");
   });
@@ -67,11 +82,11 @@ describe("Project API", () => {
       title: "Viejo",
       description: "desc",
     });
-
+    
     const res = await request(app)
       .put(`/projects/${project._id}`)
       .send({ title: "Nuevo" });
-
+    
     expect(res.statusCode).toBe(200);
     expect(res.body.title).toBe("Nuevo");
   });
@@ -81,8 +96,10 @@ describe("Project API", () => {
       title: "A borrar",
       description: "desc",
     });
-
+    
     const res = await request(app).delete(`/projects/${project._id}`);
-    expect(res.statusCode).toBe(204);
+    
+    expect(res.statusCode).toBe(200);
+    expect(res.body.message).toBe("Proyecto eliminado correctamente")
   });
 });

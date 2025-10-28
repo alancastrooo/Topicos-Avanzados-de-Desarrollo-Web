@@ -1,5 +1,6 @@
 import { validateProjectData } from "../helpers/validateRequest.js";
 import { Project } from "../models/projectModel.js";
+import mongoose from "mongoose";
 
 export const createProject = async (req, res, next) => {
   try {
@@ -21,7 +22,7 @@ export const createProject = async (req, res, next) => {
 
 export const getProjects = async (_req, res, next) => {
   try {
-    const projects = await Project.find();
+    const projects = await Project.find().sort({ createdAt: 1 });
     res.status(200).json(projects);
   } catch (error) {
     next(error);
@@ -91,7 +92,9 @@ export const deleteProject = async (req, res, next) => {
     const { id } = req.params;
 
     if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ error: "ID inválido o no proporcionado." });
+      const err = new Error("ID inválido o no proporcionado.");
+      err.statusCode = 400;
+      throw err;
     }
 
     const deletedProject = await Project.findByIdAndDelete(id);

@@ -1,15 +1,15 @@
 // 404
-export const notFoundRoute = (_req, res) =>{
-    res.status(404).json({ error: 'Ruta no encontrada' });
-}
-
-
+export const notFoundRoute = (_req, res) => {
+  res.status(404).json({ error: "Ruta no encontrada" });
+};
 
 // Error Handler
 export const errorHandler = (err, _req, res, _next) => {
-  console.error(err.stack);
+  console.error("❌->\n", err.message, "\n<-❌");
 
-  let message = 'Ocurrió un error inesperado. Por favor, intenta más tarde.';
+  let message = "Ocurrió un error inesperado. Por favor, intenta más tarde.";
+
+  const statusCode = err.statusCode || 500;
 
   // Solo muestra el mensaje real si el error es controlado (400, 404, etc.)
   if (statusCode < 500 && err.message) {
@@ -17,6 +17,6 @@ export const errorHandler = (err, _req, res, _next) => {
   }
 
   res.status(statusCode).json({
-    error: message
+    error: message,
   });
-}
+};
