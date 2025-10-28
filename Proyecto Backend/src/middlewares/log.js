@@ -1,6 +1,6 @@
 
 
-const ServerLog = async (req, res, next) => {
+const ServerLog = async (req, _res, next) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
     next();
 }
