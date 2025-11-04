@@ -4,12 +4,14 @@ import eventosRouter from "./eventsRouter.js";
 import usersRouter from "./usersRouter.js";
 import productsRouter from "./productsRouter.js";
 import projectsRouter from "./projectsRouter.js";
+import patientsRouter from "./patientsRouter.js";
 
 const apiRouter = Router();
 
 apiRouter.get("/", Home);
 
 apiRouter.use('/events', eventosRouter);
+apiRouter.use('/patients', patientsRouter)
 apiRouter.use('/products', productsRouter)
 apiRouter.use('/projects', projectsRouter)
 apiRouter.use('/users', usersRouter)

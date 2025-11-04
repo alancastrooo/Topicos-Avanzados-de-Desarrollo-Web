@@ -1,4 +1,4 @@
-import { validateProjectData } from "../helpers/validateRequest.js";
+import { validateProjectData } from "../helpers/manualValidate.js";
 import { Project } from "../models/projectModel.js";
 import mongoose from "mongoose";
 
