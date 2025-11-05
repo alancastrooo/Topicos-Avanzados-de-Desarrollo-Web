@@ -1,6 +1,6 @@
 import { validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
-import { User } from "../models/userModel";
+import { User } from "../models/userModel.js";
 
 /**
  * Función auxiliar que genera el token y formatea la respuesta del usuario
