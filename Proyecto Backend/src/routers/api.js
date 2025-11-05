@@ -5,11 +5,13 @@ import usersRouter from "./usersRouter.js";
 import productsRouter from "./productsRouter.js";
 import projectsRouter from "./projectsRouter.js";
 import patientsRouter from "./patientsRouter.js";
+import authRouter from "./authRouter.js";
 
 const apiRouter = Router();
 
 apiRouter.get("/", Home);
 
+apiRouter.use('/auth', authRouter);
 apiRouter.use('/events', eventosRouter);
 apiRouter.use('/patients', patientsRouter)
 apiRouter.use('/products', productsRouter)
