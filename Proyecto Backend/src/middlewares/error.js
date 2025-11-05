@@ -5,7 +5,11 @@ export const notFoundRoute = (_req, res) => {
 
 // Error Handler
 export const errorHandler = (err, _req, res, _next) => {
-  console.error("❌->\n", err.message, "\n<-❌");
+  console.error("❌-> ", err.message, " <-❌");
+  
+  if (err.details) {
+    console.error("❌-> Details: \n", err.details, "\n<-❌");
+  }
 
   let message = "Ocurrió un error inesperado. Por favor, intenta más tarde.";
 
