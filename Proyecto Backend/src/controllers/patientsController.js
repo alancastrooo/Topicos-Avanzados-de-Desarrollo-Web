@@ -95,7 +95,7 @@ export const loadPatients = async (_req, res, next) => {
     ];
 
     // Verificar si ya existen pacientes
-    const count = await Paciente.countDocuments();
+    const count = await Patient.countDocuments();
     if (count > 0) {
       const err = new Error("Ya existen pacientes en la base de datos");
       err.statusCode = 409; // conflicto
@@ -103,7 +103,7 @@ export const loadPatients = async (_req, res, next) => {
     }
 
     // Insertar pacientes
-    const result = await Paciente.insertMany(pacientesEjemplo);
+    const result = await Patient.insertMany(pacientesEjemplo);
 
     res.status(201).json({
       message: "Pacientes cargados correctamente",
@@ -149,7 +149,7 @@ export const updatePatient = async (req, res, next) => {
       throw err;
     }
 
-    const pacienteActualizado = await Paciente.findByIdAndUpdate(
+    const pacienteActualizado = await Patient.findByIdAndUpdate(
       req.params.id,
       { $set: camposActualizados },
       { new: true, runValidators: true }

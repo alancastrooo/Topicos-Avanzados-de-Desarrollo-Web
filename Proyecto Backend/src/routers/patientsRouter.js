@@ -10,7 +10,7 @@ const patientsRouter = Router();
 patientsRouter.get("", authenticateToken, getPatients);
 patientsRouter.get("/:id", authenticateToken, getPatientById);
 patientsRouter.post("", authenticateToken, patientValidation, createPatient);
-patientsRouter.post("/cargar-datos", loadPatients);
+patientsRouter.post("/load-data", loadPatients);
 patientsRouter.put("/:id", authenticateToken, verifyAdmin, idValidator, partialPatientValidation, updatePatient);
 patientsRouter.delete("/:id", authenticateToken, verifyAdmin, idValidator, deletePatient);
 

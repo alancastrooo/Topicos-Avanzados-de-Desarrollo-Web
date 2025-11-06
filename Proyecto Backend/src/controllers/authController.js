@@ -1,6 +1,11 @@
 import { validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
 import { User } from "../models/userModel.js";
+import dotenv from "dotenv";
+
+
+dotenv.config();
+
 
 /**
  * Función auxiliar que genera el token y formatea la respuesta del usuario
@@ -58,7 +63,7 @@ export const login = async (req, res, next) => {
       throw err;
     }
 
-    respuesta = generateUserResponse(user)
+    const respuesta = generateUserResponse(user)
 
     res.status(200).json(respuesta);
   } catch (error) {
@@ -92,7 +97,7 @@ export const register = async (req, res, next) => {
     const newUser = new User({ name, email, password });
     await newUser.save();
 
-    respuesta = generateUserResponse(newUser)
+    const respuesta = generateUserResponse(newUser)
     
     res.status(201).json(respuesta);
   } catch (error) {
@@ -112,7 +117,7 @@ export const checkStatus = async (req, res, next) => {
       });
     }
 
-    respuesta = generateUserResponse(user)
+    const respuesta = generateUserResponse(user)
 
     res.status(200).json(respuesta);
   } catch (error) {
