@@ -27,8 +27,8 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["user", "admin"],
-      default: "user",
+      enum: ["admin", "analyst", "visitor"],
+      default: "visitor",
     },
     isActive: {
       type: Boolean,
@@ -50,6 +50,19 @@ userSchema.pre("save", async function (next) {
   const bcrypt = await import("bcryptjs");
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+userSchema.pre("insertMany", async function (next, docs) {
+  const bcrypt = await import("bcryptjs");
+
+  for (const doc of docs) {
+    if (doc.password) {
+      const salt = await bcrypt.genSalt(10);
+      doc.password = await bcrypt.hash(doc.password, salt);
+    }
+  }
+
   next();
 });
 

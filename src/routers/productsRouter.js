@@ -3,7 +3,7 @@ import { createProduct, deleteProduct, findProduct, getProducts, updateProduct }
 
 const productsRouter = Router()
 
-// api_url/products
+// api_url/api/products
 productsRouter.post('', createProduct)
 productsRouter.get('', getProducts)
 productsRouter.get('/find', findProduct)

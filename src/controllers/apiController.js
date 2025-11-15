@@ -72,7 +72,7 @@ export const Home = async (req, res) => {
 
         <img src="https://r-charts.com/es/miscelanea/procesamiento-imagenes-magick_files/figure-html/color-fondo-imagen-r.png" alt="Colibrí">
 
-        <h1>¡Bienvenido a la API de Gestión de Eventos!</h1>
+        <h1>¡Bienvenido a la API de Tópicos Avanzados de desarrollo Web!</h1>
 
         <p>Explora las funcionalidades y disfruta tu experiencia.</p>
 

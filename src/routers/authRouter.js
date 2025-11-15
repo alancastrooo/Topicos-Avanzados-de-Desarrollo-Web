@@ -8,7 +8,7 @@ import { authenticateToken } from "../middlewares/auth.js";
 
 const authRouter = Router();
 
-// api_url/auth
+// api_url/api/auth
 authRouter.post("/login", loginValidator, login);
 authRouter.post("/register", registerValidator, register);
 authRouter.get("/check-status", authenticateToken, checkStatus);

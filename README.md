@@ -16,12 +16,26 @@ Run the next command to instal the dependencies/node_modules:
 npm i
 ```
 
+## Seed
+
+To load the initial data you need to run the next command and then the backend will be loaded with `Users`, `Projects`, `Vehicles` and `Access`:
+
+```bash
+npm run seed
+```
+
 ## Start Server
 
 to start the server run the next command in the terminal:
 
 ```bash
 npm run start
+```
+
+or use the next command to use Nodemon:
+
+```bash
+npm run dev
 ```
 
 ## Server tests

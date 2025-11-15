@@ -6,7 +6,7 @@ export const notFoundRoute = (_req, res) => {
 // Error Handler
 export const errorHandler = (err, _req, res, _next) => {
   console.error("❌-> ", err.message, " <-❌");
-  
+
   if (err.details) {
     console.error("❌-> Details: \n", err.details, "\n<-❌");
   }
@@ -23,4 +23,11 @@ export const errorHandler = (err, _req, res, _next) => {
   res.status(statusCode).json({
     error: message,
   });
+};
+
+export const trError = (code, message, details = "") => {
+  const err = new Error(message);
+  err.statusCode = code;
+  err.details = details;
+  throw err;
 };

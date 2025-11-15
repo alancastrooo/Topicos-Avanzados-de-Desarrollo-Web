@@ -73,12 +73,24 @@ export const authenticateToken = (req, res, next) => {
 
 /**
  * Middleware: Verifies the access level.
+ * minimum auth level: 'analyst'.
+ * !Note: authenticateToken is required prior to use this.
+ */
+export const verifyAnalyst = (req, res, next) => {
+  if (req.user.role !== "analyst" && req.user.role !== "admin") {
+    return res.status(403).json({ message: "Acceso solo para analistas o administradores" });
+  }
+  next();
+};
+
+/**
+ * Middleware: Verifies the access level.
  * minimum auth level: 'admin'.
  * !Note: authenticateToken is required prior to use this.
  */
 export const verifyAdmin = (req, res, next) => {
   if (req.user.role !== "admin" ) {
-    return res.status(403).json({ message: "Acceso solo para moderadores o administradores" });
+    return res.status(403).json({ message: "Acceso solo para administradores" });
   }
   next();
 };

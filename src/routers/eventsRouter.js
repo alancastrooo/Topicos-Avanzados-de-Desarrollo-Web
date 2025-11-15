@@ -3,7 +3,7 @@ import { getEvents, getEventId, createEvent, updateEvent, deleteEvent } from "..
 
 const eventsRouter = Router()
 
-// api_url/events
+// api_url/api/events
 eventsRouter.get('', getEvents);
 eventsRouter.get('/:id', getEventId);
 eventsRouter.post('', createEvent);

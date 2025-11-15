@@ -6,7 +6,7 @@ import { authenticateToken, verifyAdmin } from "../middlewares/auth.js";
 
 const patientsRouter = Router();
 
-// api_url/patients
+// api_url/api/patients
 patientsRouter.get("", authenticateToken, getPatients);
 patientsRouter.get("/:id", authenticateToken, getPatientById);
 patientsRouter.post("", authenticateToken, patientValidation, createPatient);

@@ -3,7 +3,7 @@ import { createProject, deleteProject, getProjectById, getProjects, updateProjec
 
 const projectsRouter = Router()
 
-// api_url/projects
+// api_url/api/projects
 projectsRouter.post('', createProject) // crear un nuevo proyecto
 projectsRouter.get('', getProjects) // obtener todos los proyectos
 projectsRouter.get('/:id', getProjectById) // obtener proyecto por id
